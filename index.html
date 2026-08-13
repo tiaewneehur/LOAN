@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบติดตามเงินกู้ — น้าเช</title>
+<title>สินเชื่อเครดิตพลัส</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -35,68 +35,156 @@
   }
 
   .wrap{max-width:880px; margin:0 auto;}
+  .hidden{display:none !important;}
 
-  .top{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:16px;
-    margin-bottom:22px;
-    flex-wrap:wrap;
+  /* ===================== LOGIN SCREEN ===================== */
+  .login-wrap{
+    max-width:420px;
+    margin:8vh auto 0;
   }
-  .top .id{
-    font-size:12.5px;
-    letter-spacing:0.12em;
-    color:var(--text-dim);
-    text-transform:uppercase;
-    margin:0 0 8px;
+  .login-brand{
+    text-align:center;
+    margin-bottom:28px;
   }
-  .top h1{
-    font-size:28px;
-    font-weight:700;
-    margin:0;
-    letter-spacing:0.01em;
+  .login-brand .mark{
+    width:52px; height:52px;
+    margin:0 auto 14px;
+    border-radius:14px;
+    background:linear-gradient(135deg, var(--navy-accent), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:20px; color:#0B1220;
   }
-  .top h1 span{color:var(--gold);}
-  .badge{
-    background:rgba(59,111,224,0.14);
-    border:1px solid rgba(59,111,224,0.35);
-    color:#9DB8F7;
-    font-size:12.5px;
-    font-weight:500;
-    padding:8px 14px;
-    border-radius:999px;
-    white-space:nowrap;
-  }
+  .login-brand h1{font-size:22px; font-weight:700; margin:0 0 6px;}
+  .login-brand p{font-size:13px; color:var(--text-dim); margin:0;}
 
-  /* tabs */
-  .tabs{
-    display:flex;
-    gap:6px;
+  .login-card{
     background:var(--panel);
     border:1px solid var(--panel-line);
+    border-radius:var(--radius);
+    padding:28px 26px;
+  }
+  .login-step{display:none;}
+  .login-step.active{display:block; animation:fade .3s ease;}
+
+  .field-label{font-size:13px; color:var(--text-dim); font-weight:500; margin:0 0 8px;}
+
+  .phone-input-wrap{
+    display:flex; align-items:center; gap:10px;
+    background:var(--bg-soft);
+    border:1px solid var(--panel-line);
     border-radius:12px;
-    padding:5px;
-    margin-bottom:20px;
-    width:fit-content;
+    padding:4px 16px;
+    margin-bottom:14px;
+  }
+  .phone-input-wrap .pre{color:var(--text-dim); font-size:15px; font-weight:600; white-space:nowrap;}
+  .phone-input-wrap input{
+    flex:1; background:transparent; border:none; outline:none;
+    color:var(--text); font-family:'Sarabun',sans-serif;
+    font-size:18px; font-weight:600; padding:12px 0; letter-spacing:0.04em;
+  }
+
+  .otp-input-wrap{
+    display:flex; gap:8px;
+    margin-bottom:10px;
+  }
+  .otp-input-wrap input{
+    width:100%;
+    text-align:center;
+    background:var(--bg-soft);
+    border:1px solid var(--panel-line);
+    border-radius:10px;
+    color:var(--text);
+    font-family:'Sarabun',sans-serif;
+    font-size:22px; font-weight:700;
+    padding:12px 0;
+    outline:none;
+  }
+  .otp-input-wrap input:focus{border-color:var(--navy-accent);}
+
+  .otp-hint{
+    font-size:12px; color:var(--gold); background:rgba(224,176,59,0.1);
+    border:1px solid rgba(224,176,59,0.3); border-radius:8px;
+    padding:9px 12px; margin-bottom:16px; line-height:1.6;
+  }
+
+  .remember-row{
+    display:flex; align-items:center; gap:9px;
+    margin:16px 0 20px;
+    font-size:13.5px; color:var(--text-dim);
+  }
+  .remember-row input{width:16px; height:16px; accent-color:var(--navy-accent);}
+
+  .btn-block{
+    width:100%;
+    appearance:none; border:none;
+    background:linear-gradient(135deg, var(--navy-accent), #5A8CF0);
+    color:#fff;
+    font-family:'Sarabun',sans-serif;
+    font-size:15.5px; font-weight:700;
+    padding:14px 0;
+    border-radius:12px;
+    cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(59,111,224,0.5);
+    transition:transform .15s ease;
+  }
+  .btn-block:hover{transform:translateY(-1px);}
+  .btn-block:disabled{opacity:.45; cursor:not-allowed; transform:none;}
+
+  .link-btn{
+    display:block; width:100%; text-align:center;
+    background:none; border:none; color:var(--text-dim);
+    font-family:'Sarabun',sans-serif; font-size:12.5px;
+    margin-top:14px; cursor:pointer;
+  }
+  .link-btn:hover{color:var(--text);}
+
+  .login-note{
+    text-align:center; font-size:11px; color:rgba(138,151,175,0.55);
+    margin-top:20px; line-height:1.7;
+  }
+
+  /* ===================== APP SHELL ===================== */
+  .top{
+    display:flex; align-items:flex-start; justify-content:space-between;
+    gap:16px; margin-bottom:22px; flex-wrap:wrap;
+  }
+  .top .id{font-size:12.5px; letter-spacing:0.12em; color:var(--text-dim); text-transform:uppercase; margin:0 0 8px;}
+  .top h1{font-size:28px; font-weight:700; margin:0; letter-spacing:0.01em;}
+  .top h1 span{color:var(--gold);}
+
+  .user-chip{
+    display:flex; align-items:center; gap:10px;
+    background:var(--panel); border:1px solid var(--panel-line);
+    padding:8px 10px 8px 14px; border-radius:999px;
+  }
+  .user-chip .who{text-align:right;}
+  .user-chip .who .n{font-size:13px; font-weight:600; line-height:1.3;}
+  .user-chip .who .p{font-size:11px; color:var(--text-dim); line-height:1.3;}
+  .user-chip .avatar{
+    width:32px; height:32px; border-radius:50%;
+    background:linear-gradient(135deg, var(--navy-accent), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; color:#0B1220;
+  }
+  .user-chip .logout{
+    appearance:none; border:none; background:var(--bg-soft);
+    color:var(--text-dim); font-size:11.5px; font-weight:600;
+    padding:7px 12px; border-radius:999px; cursor:pointer;
+    border:1px solid var(--panel-line);
+  }
+  .user-chip .logout:hover{color:var(--danger); border-color:var(--danger);}
+
+  .tabs{
+    display:flex; gap:6px; background:var(--panel); border:1px solid var(--panel-line);
+    border-radius:12px; padding:5px; margin-bottom:20px; width:fit-content;
+    flex-wrap:wrap;
   }
   .tab-btn{
-    appearance:none;
-    border:none;
-    background:transparent;
-    color:var(--text-dim);
-    font-family:'Sarabun', sans-serif;
-    font-size:14.5px;
-    font-weight:600;
-    padding:10px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    transition:background .2s, color .2s;
+    appearance:none; border:none; background:transparent; color:var(--text-dim);
+    font-family:'Sarabun',sans-serif; font-size:14px; font-weight:600;
+    padding:10px 18px; border-radius:8px; cursor:pointer; transition:background .2s,color .2s;
   }
-  .tab-btn.active{
-    background:var(--navy-accent);
-    color:#fff;
-  }
+  .tab-btn.active{background:var(--navy-accent); color:#fff;}
 
   .view{display:none;}
   .view.active{display:block; animation:fade .35s ease;}
@@ -104,80 +192,36 @@
 
   .hero{
     background:linear-gradient(145deg, var(--panel), var(--bg-soft));
-    border:1px solid var(--panel-line);
-    border-radius:var(--radius);
-    padding:32px 30px;
-    position:relative;
-    overflow:hidden;
-    margin-bottom:18px;
+    border:1px solid var(--panel-line); border-radius:var(--radius);
+    padding:32px 30px; position:relative; overflow:hidden; margin-bottom:18px;
   }
   .hero::before{
-    content:"";
-    position:absolute;
-    top:-60px; right:-60px;
-    width:220px; height:220px;
+    content:""; position:absolute; top:-60px; right:-60px; width:220px; height:220px;
     background:radial-gradient(circle, rgba(59,111,224,0.25), transparent 70%);
   }
-  .hero .label{
-    font-size:13.5px;
-    color:var(--text-dim);
-    font-weight:500;
-    margin:0 0 10px;
-  }
+  .hero .label{font-size:13.5px; color:var(--text-dim); font-weight:500; margin:0 0 10px;}
   .hero .amount{
-    font-size:46px;
-    font-weight:800;
-    letter-spacing:-0.01em;
-    margin:0;
-    display:flex;
-    align-items:baseline;
-    gap:10px;
+    font-size:46px; font-weight:800; letter-spacing:-0.01em; margin:0;
+    display:flex; align-items:baseline; gap:10px;
   }
-  .hero .amount small{
-    font-size:16px;
-    font-weight:500;
-    color:var(--text-dim);
-  }
+  .hero .amount small{font-size:16px; font-weight:500; color:var(--text-dim);}
 
-  .ring-row{
-    display:flex;
-    align-items:center;
-    gap:22px;
-    margin-top:26px;
-    flex-wrap:wrap;
-  }
+  .ring-row{display:flex; align-items:center; gap:22px; margin-top:26px; flex-wrap:wrap;}
   .ring{position:relative; width:104px; height:104px; flex:0 0 auto;}
   .ring svg{transform:rotate(-90deg);}
   .ring circle{fill:none; stroke-width:9;}
   .ring .track{stroke:rgba(255,255,255,0.08);}
   .ring .fill{
-    stroke:url(#grad);
-    stroke-linecap:round;
-    stroke-dasharray:283;
-    stroke-dashoffset:283;
+    stroke:url(#grad); stroke-linecap:round; stroke-dasharray:283; stroke-dashoffset:283;
     transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1);
   }
-  .ring .pct{
-    position:absolute; inset:0;
-    display:flex; align-items:center; justify-content:center;
-    font-size:19px; font-weight:700;
-  }
+  .ring .pct{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:19px; font-weight:700;}
   .ring-copy{flex:1; min-width:180px;}
   .ring-copy .t{font-size:14.5px; font-weight:600; margin:0 0 4px;}
   .ring-copy .d{font-size:13px; color:var(--text-dim); margin:0; line-height:1.6;}
 
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:14px;
-    margin-bottom:18px;
-  }
-  .card{
-    background:var(--panel);
-    border:1px solid var(--panel-line);
-    border-radius:14px;
-    padding:20px 18px;
-  }
+  .grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:18px;}
+  .card{background:var(--panel); border:1px solid var(--panel-line); border-radius:14px; padding:20px 18px;}
   .card .k{font-size:12.5px; color:var(--text-dim); font-weight:500; margin:0 0 10px;}
   .card .v{font-size:22px; font-weight:700; margin:0; letter-spacing:-0.01em;}
   .card .v.gold{color:var(--gold);}
@@ -185,121 +229,65 @@
   .card .foot{font-size:11.5px; color:var(--text-dim); margin-top:6px;}
 
   .note{
-    background:rgba(224,98,59,0.08);
-    border:1px solid rgba(224,98,59,0.25);
-    border-radius:14px;
-    padding:18px 20px;
-    font-size:14px;
-    color:#CBD3E0;
-    line-height:1.75;
+    background:rgba(224,98,59,0.08); border:1px solid rgba(224,98,59,0.25); border-radius:14px;
+    padding:18px 20px; font-size:14px; color:#CBD3E0; line-height:1.75;
   }
   .note b{color:var(--text); font-weight:600;}
 
-  .cta-row{margin-top:18px; text-align:right;}
+  .cta-row{margin-top:18px; display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;}
   .btn-primary{
-    appearance:none;
-    border:none;
+    appearance:none; border:none;
     background:linear-gradient(135deg, var(--navy-accent), #5A8CF0);
-    color:#fff;
-    font-family:'Sarabun', sans-serif;
-    font-size:15px;
-    font-weight:700;
-    padding:13px 26px;
-    border-radius:10px;
-    cursor:pointer;
+    color:#fff; font-family:'Sarabun',sans-serif; font-size:15px; font-weight:700;
+    padding:13px 26px; border-radius:10px; cursor:pointer;
     box-shadow:0 10px 24px -8px rgba(59,111,224,0.55);
     transition:transform .15s ease, box-shadow .15s ease;
   }
   .btn-primary:hover{transform:translateY(-1px); box-shadow:0 14px 28px -8px rgba(59,111,224,0.65);}
-  .btn-primary:active{transform:translateY(0);}
+  .btn-secondary{
+    appearance:none; border:1px solid var(--panel-line); background:var(--panel);
+    color:var(--text); font-family:'Sarabun',sans-serif; font-size:15px; font-weight:700;
+    padding:13px 26px; border-radius:10px; cursor:pointer; transition:.15s;
+  }
+  .btn-secondary:hover{border-color:var(--navy-accent);}
 
   /* ===== payment view ===== */
-  .pay-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-  }
+  .pay-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
   @media (max-width:680px){ .pay-grid{grid-template-columns:1fr;} }
 
-  .pay-card{
-    background:var(--panel);
-    border:1px solid var(--panel-line);
-    border-radius:var(--radius);
-    padding:26px 24px;
-  }
-  .pay-card h2{
-    font-size:16px; font-weight:700; margin:0 0 18px;
-  }
+  .pay-card{background:var(--panel); border:1px solid var(--panel-line); border-radius:var(--radius); padding:26px 24px;}
+  .pay-card h2{font-size:16px; font-weight:700; margin:0 0 6px;}
+  .after-sub{font-size:12.5px; color:var(--text-dim); margin:0 0 20px;}
 
-  .field-label{
-    font-size:13px; color:var(--text-dim); font-weight:500;
-    margin:0 0 8px;
-  }
   .amount-input-wrap{
-    display:flex; align-items:center;
-    background:var(--bg-soft);
-    border:1px solid var(--panel-line);
-    border-radius:12px;
-    padding:4px 16px;
-    margin-bottom:14px;
+    display:flex; align-items:center; background:var(--bg-soft); border:1px solid var(--panel-line);
+    border-radius:12px; padding:4px 16px; margin-bottom:14px;
   }
   .amount-input-wrap span{color:var(--text-dim); font-size:18px; margin-right:8px;}
   .amount-input-wrap input{
-    flex:1;
-    background:transparent;
-    border:none;
-    outline:none;
-    color:var(--text);
-    font-family:'Sarabun', sans-serif;
-    font-size:24px;
-    font-weight:700;
-    padding:12px 0;
-    width:100%;
+    flex:1; background:transparent; border:none; outline:none; color:var(--text);
+    font-family:'Sarabun',sans-serif; font-size:24px; font-weight:700; padding:12px 0; width:100%;
   }
 
   .quick-row{display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;}
   .quick-btn{
-    appearance:none;
-    border:1px solid var(--panel-line);
-    background:var(--bg-soft);
-    color:var(--text-dim);
-    font-family:'Sarabun', sans-serif;
-    font-size:13px;
-    font-weight:600;
-    padding:8px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    transition:.15s;
+    appearance:none; border:1px solid var(--panel-line); background:var(--bg-soft); color:var(--text-dim);
+    font-family:'Sarabun',sans-serif; font-size:13px; font-weight:600; padding:8px 14px; border-radius:8px;
+    cursor:pointer; transition:.15s;
   }
   .quick-btn:hover{border-color:var(--navy-accent); color:var(--text);}
-  .quick-btn.active{background:var(--navy-accent); color:#fff; border-color:var(--navy-accent);}
 
   .method-row{display:flex; gap:8px; margin-bottom:20px;}
   .method-btn{
-    flex:1;
-    appearance:none;
-    border:1px solid var(--panel-line);
-    background:var(--bg-soft);
-    color:var(--text-dim);
-    font-family:'Sarabun', sans-serif;
-    font-size:13.5px;
-    font-weight:600;
-    padding:12px 10px;
-    border-radius:10px;
-    cursor:pointer;
-    transition:.15s;
+    flex:1; appearance:none; border:1px solid var(--panel-line); background:var(--bg-soft); color:var(--text-dim);
+    font-family:'Sarabun',sans-serif; font-size:13.5px; font-weight:600; padding:12px 10px; border-radius:10px;
+    cursor:pointer; transition:.15s;
   }
   .method-btn.active{background:rgba(59,111,224,0.16); border-color:var(--navy-accent); color:#9DB8F7;}
 
   .qr-box{
-    background:#fff;
-    border-radius:14px;
-    padding:18px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-    margin-bottom:16px;
+    background:#fff; border-radius:14px; padding:18px; display:flex; flex-direction:column;
+    align-items:center; gap:10px; margin-bottom:16px;
   }
   .qr-box img{width:168px; height:168px; display:block;}
   .qr-box .qr-caption{color:#22303F; font-size:12.5px; font-weight:600; text-align:center;}
@@ -307,93 +295,146 @@
 
   .bank-details{margin-bottom:16px; display:none;}
   .bank-details.show{display:block;}
-  .bank-row{
-    display:flex; justify-content:space-between;
-    padding:11px 0; border-bottom:1px dashed var(--panel-line);
-    font-size:13.5px;
-  }
+  .bank-row{display:flex; justify-content:space-between; padding:11px 0; border-bottom:1px dashed var(--panel-line); font-size:13.5px;}
   .bank-row .k{color:var(--text-dim);}
   .bank-row .v{font-weight:600;}
 
-  .confirm-note{
-    font-size:12px; color:var(--text-dim); line-height:1.7;
-    margin-bottom:18px;
-  }
+  .confirm-note{font-size:12px; color:var(--text-dim); line-height:1.7; margin-bottom:18px;}
 
   .btn-confirm{
-    width:100%;
-    appearance:none;
-    border:none;
+    width:100%; appearance:none; border:none;
     background:linear-gradient(135deg, var(--ok), #2FA876);
-    color:#08201A;
-    font-family:'Sarabun', sans-serif;
-    font-size:15.5px;
-    font-weight:700;
-    padding:15px 0;
-    border-radius:12px;
-    cursor:pointer;
-    box-shadow:0 10px 24px -8px rgba(59,196,138,0.4);
-    transition:transform .15s ease;
+    color:#08201A; font-family:'Sarabun',sans-serif; font-size:15.5px; font-weight:700;
+    padding:15px 0; border-radius:12px; cursor:pointer;
+    box-shadow:0 10px 24px -8px rgba(59,196,138,0.4); transition:transform .15s ease;
   }
   .btn-confirm:hover{transform:translateY(-1px);}
   .btn-confirm:disabled{opacity:.5; cursor:not-allowed; transform:none;}
 
-  .after-card h2{margin-bottom:6px;}
-  .after-sub{font-size:12.5px; color:var(--text-dim); margin:0 0 20px;}
-
-  .after-row{
-    display:flex; justify-content:space-between; align-items:baseline;
-    padding:13px 0; border-bottom:1px dashed var(--panel-line);
-  }
+  .after-row{display:flex; justify-content:space-between; align-items:baseline; padding:13px 0; border-bottom:1px dashed var(--panel-line);}
   .after-row .k{font-size:13.5px; color:var(--text-dim);}
-  .after-row .v{font-family:'Sarabun', sans-serif; font-weight:700; font-size:17px;}
+  .after-row .v{font-family:'Sarabun',sans-serif; font-weight:700; font-size:17px;}
   .after-row.highlight .v{color:#6FDCB0; font-size:20px;}
 
   .success-flash{
-    display:none;
-    align-items:center;
-    gap:10px;
-    background:rgba(59,196,138,0.12);
-    border:1px solid rgba(59,196,138,0.35);
-    color:#6FDCB0;
-    font-size:13.5px;
-    font-weight:600;
-    padding:12px 16px;
-    border-radius:10px;
-    margin-top:16px;
+    display:none; align-items:center; gap:10px; background:rgba(59,196,138,0.12);
+    border:1px solid rgba(59,196,138,0.35); color:#6FDCB0; font-size:13.5px; font-weight:600;
+    padding:12px 16px; border-radius:10px; margin-top:16px;
   }
   .success-flash.show{display:flex;}
 
-  .foot-line{
-    text-align:center;
-    font-size:11.5px;
-    color:rgba(138,151,175,0.5);
-    margin-top:36px;
-    letter-spacing:0.04em;
+  /* ===== apply view ===== */
+  .apply-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:14px; align-items:start;}
+  @media (max-width:760px){ .apply-grid{grid-template-columns:1fr;} }
+
+  .form-card{background:var(--panel); border:1px solid var(--panel-line); border-radius:var(--radius); padding:26px 24px;}
+  .form-card h2{font-size:16px; font-weight:700; margin:0 0 4px;}
+
+  .form-row{margin-bottom:16px;}
+  .form-row label{display:block; font-size:12.5px; color:var(--text-dim); font-weight:500; margin-bottom:7px;}
+  .form-row input, .form-row select, .form-row textarea{
+    width:100%; background:var(--bg-soft); border:1px solid var(--panel-line); border-radius:10px;
+    color:var(--text); font-family:'Sarabun',sans-serif; font-size:14.5px; padding:12px 14px; outline:none;
   }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus{border-color:var(--navy-accent);}
+  .form-row textarea{resize:vertical; min-height:70px;}
+  .form-two{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:500px){ .form-two{grid-template-columns:1fr;} }
+
+  .apply-hist-card{background:var(--panel); border:1px solid var(--panel-line); border-radius:var(--radius); padding:22px 22px;}
+  .apply-hist-card h3{font-size:14.5px; font-weight:700; margin:0 0 4px;}
+  .apply-hist-card .sub{font-size:12px; color:var(--text-dim); margin:0 0 16px;}
+
+  .app-item{
+    border:1px solid var(--panel-line); border-radius:12px; padding:14px 16px; margin-bottom:10px;
+    background:var(--bg-soft);
+  }
+  .app-item .row1{display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;}
+  .app-item .amt{font-weight:700; font-size:16px;}
+  .app-item .status{
+    font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px;
+    background:rgba(224,176,59,0.15); color:var(--gold); border:1px solid rgba(224,176,59,0.35);
+  }
+  .app-item .meta{font-size:12px; color:var(--text-dim); line-height:1.6;}
+  .empty-hist{font-size:13px; color:var(--text-dim); text-align:center; padding:20px 0;}
+
+  .foot-line{text-align:center; font-size:11.5px; color:rgba(138,151,175,0.5); margin-top:36px; letter-spacing:0.04em;}
 </style>
 </head>
 <body>
 
-<div class="wrap">
+<!-- ===================== LOGIN SCREEN ===================== -->
+<div id="screen-login" class="login-wrap">
+  <div class="login-brand">
+    <div class="mark">CP</div>
+    <h1>สินเชื่อเครดิตพลัส</h1>
+    <p>เข้าสู่ระบบด้วยหมายเลขโทรศัพท์ของคุณ</p>
+  </div>
+
+  <div class="login-card">
+
+    <!-- step 1: phone -->
+    <div class="login-step active" id="step-phone">
+      <p class="field-label">หมายเลขโทรศัพท์</p>
+      <div class="phone-input-wrap">
+        <span class="pre">+66</span>
+        <input type="tel" id="login-phone" placeholder="8x-xxx-xxxx" maxlength="10" inputmode="numeric">
+      </div>
+      <button class="btn-block" id="btn-send-otp" onclick="sendOtp()" disabled>ขอรหัส OTP</button>
+      <p class="login-note">เดโม: ยังไม่ได้เชื่อมต่อระบบส่ง SMS จริง รหัส OTP จะแสดงให้ในขั้นถัดไปเพื่อทดสอบ</p>
+    </div>
+
+    <!-- step 2: otp -->
+    <div class="login-step" id="step-otp">
+      <p class="field-label">กรอกรหัส OTP ที่ส่งไปยัง <span id="otp-phone-display" style="color:var(--text);"></span></p>
+      <div class="otp-input-wrap">
+        <input type="text" id="otp-1" maxlength="1" inputmode="numeric">
+        <input type="text" id="otp-2" maxlength="1" inputmode="numeric">
+        <input type="text" id="otp-3" maxlength="1" inputmode="numeric">
+        <input type="text" id="otp-4" maxlength="1" inputmode="numeric">
+      </div>
+      <div class="otp-hint" id="otp-hint"></div>
+
+      <div class="remember-row">
+        <input type="checkbox" id="remember-me" checked>
+        <label for="remember-me">จดจำฉันไว้ในเครื่องนี้ (ไม่ต้องกรอก OTP ครั้งถัดไป)</label>
+      </div>
+
+      <button class="btn-block" id="btn-verify-otp" onclick="verifyOtp()">เข้าสู่ระบบ</button>
+      <button class="link-btn" onclick="backToPhone()">เปลี่ยนหมายเลขโทรศัพท์</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div class="wrap hidden" id="app-root">
 
   <div class="top">
     <div>
       <p class="id">บัญชีเงินกู้ · 000-450000-1</p>
       <h1>สินเชื่อ<span>เครดิตพลัส</span></h1>
     </div>
-    <span class="badge">อัปเดตล่าสุด: วันนี้</span>
+    <div class="user-chip">
+      <div class="avatar" id="avatar-initial">ว</div>
+      <div class="who">
+        <div class="n" id="chip-name">นายวิชาญ นาคะลัย</div>
+        <div class="p" id="chip-phone">+66</div>
+      </div>
+      <button class="logout" onclick="logout()">ออกจากระบบ</button>
+    </div>
   </div>
 
   <div class="tabs">
     <button class="tab-btn active" id="tab-btn-overview" onclick="switchTab('overview')">ภาพรวม</button>
     <button class="tab-btn" id="tab-btn-pay" onclick="switchTab('pay')">ชำระเงิน</button>
+    <button class="tab-btn" id="tab-btn-apply" onclick="switchTab('apply')">สมัครสินเชื่อ</button>
   </div>
 
   <!-- ===== OVERVIEW ===== -->
   <div class="view active" id="view-overview">
     <div class="hero">
-      <p class="label">ยอดคงเหลือ</p>
+      <p class="label">ยอดคงเหลือ · ผู้กู้ <span id="hero-name">นายวิชาญ นาคะลัย</span></p>
       <p class="amount" id="v-balance">฿0<small>บาท</small></p>
 
       <div class="ring-row">
@@ -440,6 +481,7 @@
     </div>
 
     <div class="cta-row">
+      <button class="btn-secondary" onclick="switchTab('apply')">สมัครสินเชื่อเพิ่ม</button>
       <button class="btn-primary" onclick="switchTab('pay')">ชำระเงินตอนนี้</button>
     </div>
   </div>
@@ -448,9 +490,9 @@
   <div class="view" id="view-pay">
     <div class="pay-grid">
 
-      <!-- left: input form -->
       <div class="pay-card">
         <h2>กรอกยอดที่ต้องการชำระ</h2>
+        <p class="after-sub" style="margin:-2px 0 18px;">ผู้กู้: <span class="pay-name">นายวิชาญ นาคะลัย</span></p>
 
         <p class="field-label">จำนวนเงิน</p>
         <div class="amount-input-wrap">
@@ -474,7 +516,7 @@
 
         <div id="bank-view" class="bank-details">
           <div class="bank-row"><span class="k">ธนาคาร</span><span class="v">กสิกรไทย</span></div>
-          <div class="bank-row"><span class="k">ชื่อบัญชี</span><span class="v">น้าเช (บัญชีเงินกู้)</span></div>
+          <div class="bank-row"><span class="k">ชื่อบัญชี</span><span class="v pay-name">นายวิชาญ นาคะลัย (บัญชีเงินกู้)</span></div>
           <div class="bank-row"><span class="k">เลขบัญชี</span><span class="v">123-4-56789-0</span></div>
         </div>
 
@@ -484,14 +526,12 @@
         </p>
 
         <button class="btn-confirm" id="confirm-btn" onclick="confirmPayment()" disabled>ยืนยันการชำระเงิน</button>
-
         <div class="success-flash" id="success-flash">✓ บันทึกการชำระเงินเรียบร้อยแล้ว</div>
       </div>
 
-      <!-- right: live summary -->
       <div class="pay-card after-card">
         <h2>สรุปยอดหลังชำระ</h2>
-        <p class="after-sub">ตัวเลขจะอัปเดตทันทีตามจำนวนที่กรอก</p>
+        <p class="after-sub">ผู้กู้: <span class="pay-name">นายวิชาญ นาคะลัย</span> · ตัวเลขจะอัปเดตทันทีตามจำนวนที่กรอก</p>
 
         <div class="after-row">
           <span class="k">ยอดคงเหลือปัจจุบัน</span>
@@ -514,53 +554,248 @@
     </div>
   </div>
 
-  <p class="foot-line">ระบบติดตามยอดเงินกู้ · ข้อมูลสำหรับการใช้งานภายใน</p>
+  <!-- ===== APPLY ===== -->
+  <div class="view" id="view-apply">
+    <div class="apply-grid">
+
+      <div class="form-card">
+        <h2>แบบฟอร์มสมัครสินเชื่อ</h2>
+        <p class="after-sub">กรอกข้อมูลให้ครบถ้วนเพื่อยื่นคำขอสินเชื่อเครดิตพลัส</p>
+
+        <div class="form-row">
+          <label>ชื่อ-นามสกุล</label>
+          <input type="text" id="ap-name" placeholder="เช่น วิชาญ นาคะลัย">
+        </div>
+
+        <div class="form-two">
+          <div class="form-row">
+            <label>เลขบัตรประชาชน</label>
+            <input type="text" id="ap-idcard" maxlength="13" inputmode="numeric" placeholder="13 หลัก">
+          </div>
+          <div class="form-row">
+            <label>เบอร์โทรศัพท์ติดต่อ</label>
+            <input type="tel" id="ap-phone" maxlength="10" inputmode="numeric" placeholder="08xxxxxxxx">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>ที่อยู่ปัจจุบัน</label>
+          <textarea id="ap-address" placeholder="บ้านเลขที่ ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"></textarea>
+        </div>
+
+        <div class="form-two">
+          <div class="form-row">
+            <label>อาชีพ</label>
+            <input type="text" id="ap-job" placeholder="เช่น พนักงานบริษัท / ค้าขาย">
+          </div>
+          <div class="form-row">
+            <label>รายได้ต่อเดือน (บาท)</label>
+            <input type="number" id="ap-income" placeholder="0">
+          </div>
+        </div>
+
+        <div class="form-two">
+          <div class="form-row">
+            <label>วงเงินที่ต้องการขอสินเชื่อ (บาท)</label>
+            <input type="number" id="ap-amount" placeholder="0">
+          </div>
+          <div class="form-row">
+            <label>ระยะเวลาผ่อนชำระ (เดือน)</label>
+            <select id="ap-term">
+              <option value="6">6 เดือน</option>
+              <option value="12" selected>12 เดือน</option>
+              <option value="24">24 เดือน</option>
+              <option value="36">36 เดือน</option>
+              <option value="48">48 เดือน</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label>วัตถุประสงค์ในการขอสินเชื่อ</label>
+          <select id="ap-purpose">
+            <option value="ใช้จ่ายส่วนตัว">ใช้จ่ายส่วนตัว</option>
+            <option value="หมุนเวียนธุรกิจ">หมุนเวียนธุรกิจ</option>
+            <option value="การศึกษา">การศึกษา</option>
+            <option value="ซ่อมแซม/ที่อยู่อาศัย">ซ่อมแซม / ที่อยู่อาศัย</option>
+            <option value="รักษาพยาบาล">รักษาพยาบาล</option>
+            <option value="อื่นๆ">อื่นๆ</option>
+          </select>
+        </div>
+
+        <p class="confirm-note">
+          หน้านี้เป็นแบบฟอร์มจำลองสำหรับสาธิตระบบ — เมื่อกด "ส่งคำขอ" ข้อมูลจะถูกบันทึกไว้ในเครื่องนี้เท่านั้น
+          และแสดงในประวัติการสมัครด้านขวา ยังไม่มีการตรวจสอบเครดิตหรืออนุมัติวงเงินจริง
+        </p>
+
+        <button class="btn-confirm" onclick="submitApplication()">ส่งคำขอสินเชื่อ</button>
+        <div class="success-flash" id="apply-success">✓ ส่งคำขอสินเชื่อเรียบร้อยแล้ว รอการตรวจสอบ</div>
+      </div>
+
+      <div class="apply-hist-card">
+        <h3>ประวัติการสมัคร</h3>
+        <p class="sub">ระบบจดจำคำขอของคุณไว้ในเครื่องนี้ เหมือนประวัติการจองที่เว็บจองที่นั่งจำไว้ให้</p>
+        <div id="apply-history"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="foot-line">สินเชื่อเครดิตพลัส · ข้อมูลสำหรับการใช้งานภายใน (เดโม)</p>
 </div>
 
 <script>
-  const loan = 450000;
-  let balance = 239600;
-  const rate = 0.03;
+  /* ===================== STORAGE KEYS ===================== */
+  const K_SESSION = 'cp_session';       // {phone, name}
+  const K_PROFILE = 'cp_profile_';      // + phone -> {name}
+  const K_BALANCE = 'cp_balance';
+  const K_APPLICATIONS = 'cp_applications'; // array
+
+  const LOAN_TOTAL = 450000;
+  const RATE = 0.03;
+  const DEFAULT_NAME = 'นายวิชาญ นาคะลัย';
+
+  let currentPhone = '';
+  let pendingOtp = '';
+  let balance = Number(localStorage.getItem(K_BALANCE)) || 239600;
 
   const thb = n => '฿' + Math.round(n).toLocaleString('th-TH');
 
+  /* ===================== LOGIN FLOW ===================== */
+  const phoneInput = document.getElementById('login-phone');
+  phoneInput.addEventListener('input', () => {
+    phoneInput.value = phoneInput.value.replace(/\D/g,'').slice(0,10);
+    document.getElementById('btn-send-otp').disabled = phoneInput.value.length < 9;
+  });
+
+  function sendOtp(){
+    currentPhone = phoneInput.value;
+    pendingOtp = String(Math.floor(1000 + Math.random()*9000));
+    document.getElementById('otp-phone-display').textContent = '+66 ' + currentPhone;
+    document.getElementById('otp-hint').textContent =
+      'เดโม: รหัส OTP ทดสอบของคุณคือ ' + pendingOtp + ' (ไม่ได้ส่ง SMS จริง)';
+    document.getElementById('step-phone').classList.remove('active');
+    document.getElementById('step-otp').classList.add('active');
+    document.getElementById('otp-1').focus();
+  }
+
+  // otp auto-advance
+  ['otp-1','otp-2','otp-3','otp-4'].forEach((id, idx, arr) => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => {
+      el.value = el.value.replace(/\D/g,'').slice(0,1);
+      if(el.value && idx < arr.length-1) document.getElementById(arr[idx+1]).focus();
+    });
+    el.addEventListener('keydown', (e) => {
+      if(e.key === 'Backspace' && !el.value && idx > 0) document.getElementById(arr[idx-1]).focus();
+    });
+  });
+
+  function backToPhone(){
+    document.getElementById('step-otp').classList.remove('active');
+    document.getElementById('step-phone').classList.add('active');
+  }
+
+  function verifyOtp(){
+    const entered = ['otp-1','otp-2','otp-3','otp-4'].map(id => document.getElementById(id).value).join('');
+    if(entered.length < 4){
+      alert('กรุณากรอกรหัส OTP ให้ครบ 4 หลัก');
+      return;
+    }
+    if(entered !== pendingOtp){
+      alert('รหัส OTP ไม่ถูกต้อง ลองใหม่อีกครั้ง (เดโม รหัสที่ถูกต้องแสดงอยู่ด้านบน)');
+      return;
+    }
+
+    // look up remembered profile for this phone, else use default name for first login
+    let profile = JSON.parse(localStorage.getItem(K_PROFILE + currentPhone) || 'null');
+    if(!profile) profile = { name: DEFAULT_NAME };
+
+    const remember = document.getElementById('remember-me').checked;
+    const session = { phone: currentPhone, name: profile.name };
+
+    if(remember){
+      localStorage.setItem(K_SESSION, JSON.stringify(session));
+      localStorage.setItem(K_PROFILE + currentPhone, JSON.stringify(profile));
+    }
+    startApp(session);
+  }
+
+  function logout(){
+    localStorage.removeItem(K_SESSION);
+    document.getElementById('app-root').classList.add('hidden');
+    document.getElementById('screen-login').classList.remove('hidden');
+    document.getElementById('step-otp').classList.remove('active');
+    document.getElementById('step-phone').classList.add('active');
+    phoneInput.value = '';
+    document.getElementById('btn-send-otp').disabled = true;
+    ['otp-1','otp-2','otp-3','otp-4'].forEach(id => document.getElementById(id).value = '');
+  }
+
+  function startApp(session){
+    document.getElementById('screen-login').classList.add('hidden');
+    document.getElementById('app-root').classList.remove('hidden');
+
+    document.getElementById('chip-name').textContent = session.name;
+    document.getElementById('chip-phone').textContent = '+66 ' + session.phone;
+    document.getElementById('avatar-initial').textContent = session.name.trim().charAt(0);
+    document.getElementById('hero-name').textContent = session.name;
+    document.querySelectorAll('.pay-name').forEach(el => {
+      el.textContent = el.textContent.includes('(บัญชีเงินกู้)')
+        ? session.name + ' (บัญชีเงินกู้)'
+        : session.name;
+    });
+
+    renderOverview();
+    onAmountInput();
+    renderApplyHistory();
+  }
+
+  // auto-login if a remembered session exists (like a booking site remembering you)
+  (function tryAutoLogin(){
+    const saved = JSON.parse(localStorage.getItem(K_SESSION) || 'null');
+    if(saved && saved.phone){
+      startApp(saved);
+    }
+  })();
+
+  /* ===================== TABS ===================== */
+  function switchTab(name){
+    ['overview','pay','apply'].forEach(v=>{
+      document.getElementById('view-'+v).classList.toggle('active', v===name);
+      document.getElementById('tab-btn-'+v).classList.toggle('active', v===name);
+    });
+    if(name==='pay') onAmountInput();
+    if(name==='apply') renderApplyHistory();
+  }
+
+  /* ===================== OVERVIEW / PAYMENT ===================== */
   function renderOverview(){
-    const paid = loan - balance;
-    const pct = Math.max(0, Math.min(100, Math.round((paid / loan) * 100)));
-    const interest = Math.round(balance * rate);
+    const paid = LOAN_TOTAL - balance;
+    const pct = Math.max(0, Math.min(100, Math.round((paid / LOAN_TOTAL) * 100)));
+    const interest = Math.round(balance * RATE);
 
     document.getElementById('v-balance').innerHTML = thb(balance) + '<small>บาท</small>';
-    document.getElementById('v-loan').textContent = thb(loan);
+    document.getElementById('v-loan').textContent = thb(LOAN_TOTAL);
     document.getElementById('v-paid').textContent = thb(paid);
     document.getElementById('v-balance-inline').textContent = thb(balance);
     document.getElementById('v-interest-inline').textContent = thb(interest);
     document.getElementById('ring-pct').textContent = pct + '%';
     document.getElementById('ring-desc').textContent =
-      `ผ่อนชำระแล้ว ${thb(paid)} จากยอดกู้ทั้งหมด ${thb(loan)}`;
+      `ผ่อนชำระแล้ว ${thb(paid)} จากยอดกู้ทั้งหมด ${thb(LOAN_TOTAL)}`;
 
     const circumference = 283;
-    const offset = circumference - (pct / 100) * circumference;
-    document.getElementById('ring-fill').style.strokeDashoffset = offset;
+    document.getElementById('ring-fill').style.strokeDashoffset = circumference - (pct/100)*circumference;
 
-    // quick amount buttons based on current balance
     const quickRow = document.getElementById('quick-row');
     quickRow.innerHTML = '';
-    const suggestions = [interest, 5000, 10000, balance].filter((v,i,a)=> v>0 && a.indexOf(v)===i);
-    suggestions.forEach(v=>{
+    [interest, 5000, 10000, balance].filter((v,i,a)=> v>0 && a.indexOf(v)===i).forEach(v=>{
       const b = document.createElement('button');
       b.className = 'quick-btn';
       b.textContent = v === balance ? 'ชำระทั้งหมด' : thb(v);
       b.onclick = () => { document.getElementById('pay-amount').value = v; onAmountInput(); };
       quickRow.appendChild(b);
     });
-  }
-
-  function switchTab(name){
-    document.getElementById('view-overview').classList.toggle('active', name==='overview');
-    document.getElementById('view-pay').classList.toggle('active', name==='pay');
-    document.getElementById('tab-btn-overview').classList.toggle('active', name==='overview');
-    document.getElementById('tab-btn-pay').classList.toggle('active', name==='pay');
-    if(name==='pay') onAmountInput();
   }
 
   function setMethod(m){
@@ -574,7 +809,7 @@
     const raw = parseFloat(document.getElementById('pay-amount').value) || 0;
     const amount = Math.max(0, Math.min(raw, balance));
     const newBalance = balance - amount;
-    const nextInterest = Math.round(newBalance * rate);
+    const nextInterest = Math.round(newBalance * RATE);
 
     document.getElementById('pv-current').textContent = thb(balance);
     document.getElementById('pv-paying').textContent = thb(amount);
@@ -584,7 +819,7 @@
     document.getElementById('qr-sub').textContent = 'ยอด ' + thb(amount || 0);
     document.getElementById('qr-img').src =
       'https://api.qrserver.com/v1/create-qr-code/?size=168x168&data=' +
-      encodeURIComponent('promptpay|nacher-loan-payment|amount=' + (amount || 0));
+      encodeURIComponent('promptpay|creditplus-loan-payment|amount=' + (amount || 0));
 
     document.getElementById('confirm-btn').disabled = amount <= 0;
     document.getElementById('success-flash').classList.remove('show');
@@ -596,18 +831,78 @@
     if(amount <= 0) return;
 
     balance -= amount;
+    localStorage.setItem(K_BALANCE, String(balance));
     renderOverview();
 
     document.getElementById('success-flash').classList.add('show');
     document.getElementById('pay-amount').value = '';
     onAmountInput();
-
     setTimeout(() => switchTab('overview'), 1100);
   }
 
+  /* ===================== LOAN APPLICATION ===================== */
+  function submitApplication(){
+    const name = document.getElementById('ap-name').value.trim();
+    const idcard = document.getElementById('ap-idcard').value.trim();
+    const phone = document.getElementById('ap-phone').value.trim();
+    const address = document.getElementById('ap-address').value.trim();
+    const job = document.getElementById('ap-job').value.trim();
+    const income = document.getElementById('ap-income').value;
+    const amount = document.getElementById('ap-amount').value;
+    const term = document.getElementById('ap-term').value;
+    const purpose = document.getElementById('ap-purpose').value;
+
+    if(!name || !idcard || !phone || !address || !job || !income || !amount){
+      alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+      return;
+    }
+    if(idcard.length !== 13){
+      alert('เลขบัตรประชาชนต้องมี 13 หลัก');
+      return;
+    }
+
+    const applications = JSON.parse(localStorage.getItem(K_APPLICATIONS) || '[]');
+    applications.unshift({
+      name, idcard, phone, address, job,
+      income: Number(income), amount: Number(amount), term, purpose,
+      status: 'รอตรวจสอบ',
+      date: new Date().toLocaleDateString('th-TH', { day:'numeric', month:'short', year:'numeric' })
+    });
+    localStorage.setItem(K_APPLICATIONS, JSON.stringify(applications));
+
+    // remember applicant's name against their logged-in phone, like a booking site remembers your details
+    const session = JSON.parse(localStorage.getItem(K_SESSION) || 'null');
+    if(session){
+      localStorage.setItem(K_PROFILE + session.phone, JSON.stringify({ name }));
+    }
+
+    document.getElementById('apply-success').classList.add('show');
+    renderApplyHistory();
+    ['ap-name','ap-idcard','ap-phone','ap-address','ap-job','ap-income','ap-amount'].forEach(id=>{
+      document.getElementById(id).value = '';
+    });
+    setTimeout(() => document.getElementById('apply-success').classList.remove('show'), 3500);
+  }
+
+  function renderApplyHistory(){
+    const applications = JSON.parse(localStorage.getItem(K_APPLICATIONS) || '[]');
+    const box = document.getElementById('apply-history');
+    if(applications.length === 0){
+      box.innerHTML = '<p class="empty-hist">ยังไม่มีประวัติการสมัคร</p>';
+      return;
+    }
+    box.innerHTML = applications.map(a => `
+      <div class="app-item">
+        <div class="row1">
+          <span class="amt">${thb(a.amount)}</span>
+          <span class="status">${a.status}</span>
+        </div>
+        <div class="meta">${a.purpose} · ผ่อน ${a.term} เดือน · ยื่นเมื่อ ${a.date}</div>
+      </div>
+    `).join('');
+  }
+
   setMethod('promptpay');
-  renderOverview();
-  onAmountInput();
 </script>
 
 </body>
