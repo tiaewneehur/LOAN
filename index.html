@@ -609,6 +609,8 @@
   const K_SESSION = 'cp_session';       // {phone, name}
   const K_PROFILE = 'cp_profile_';      // + phone -> {name}
   const K_BALANCE = 'cp_balance';
+  const K_BALANCE_VERSION = 'cp_balance_version';
+  const BALANCE_VERSION = 'v2-298500'; // bump this string whenever the starting balance should reset
   const K_APPLICATIONS = 'cp_applications'; // array
 
   const LOAN_TOTAL = 450000;
@@ -616,7 +618,14 @@
   const DEFAULT_NAME = 'นายวิชาญ นาคะลัย';
 
   let currentPhone = '';
-  let balance = Number(localStorage.getItem(K_BALANCE)) || 239600;
+  let balance;
+  if(localStorage.getItem(K_BALANCE_VERSION) === BALANCE_VERSION){
+    balance = Number(localStorage.getItem(K_BALANCE)) || 298500;
+  } else {
+    balance = 298500;
+    localStorage.setItem(K_BALANCE, String(balance));
+    localStorage.setItem(K_BALANCE_VERSION, BALANCE_VERSION);
+  }
 
   const thb = n => '฿' + Math.round(n).toLocaleString('th-TH');
 
