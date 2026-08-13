@@ -83,30 +83,6 @@
     font-size:18px; font-weight:600; padding:12px 0; letter-spacing:0.04em;
   }
 
-  .otp-input-wrap{
-    display:flex; gap:8px;
-    margin-bottom:10px;
-  }
-  .otp-input-wrap input{
-    width:100%;
-    text-align:center;
-    background:var(--bg-soft);
-    border:1px solid var(--panel-line);
-    border-radius:10px;
-    color:var(--text);
-    font-family:'Sarabun',sans-serif;
-    font-size:22px; font-weight:700;
-    padding:12px 0;
-    outline:none;
-  }
-  .otp-input-wrap input:focus{border-color:var(--navy-accent);}
-
-  .otp-hint{
-    font-size:12px; color:var(--gold); background:rgba(224,176,59,0.1);
-    border:1px solid rgba(224,176,59,0.3); border-radius:8px;
-    padding:9px 12px; margin-bottom:16px; line-height:1.6;
-  }
-
   .remember-row{
     display:flex; align-items:center; gap:9px;
     margin:16px 0 20px;
@@ -548,7 +524,7 @@
 
         <div class="form-row">
           <label>ชื่อ-นามสกุล</label>
-          <input type="text" id="ap-name" placeholder="เช่น วิชาญ นาคะลัย">
+          <input type="text" id="ap-name">
         </div>
 
         <div class="form-two">
@@ -570,7 +546,7 @@
         <div class="form-two">
           <div class="form-row">
             <label>อาชีพ</label>
-            <input type="text" id="ap-job" placeholder="เช่น พนักงานบริษัท / ค้าขาย">
+            <input type="text" id="ap-job">
           </div>
           <div class="form-row">
             <label>รายได้ต่อเดือน (บาท)</label>
@@ -640,7 +616,6 @@
   const DEFAULT_NAME = 'นายวิชาญ นาคะลัย';
 
   let currentPhone = '';
-  let pendingOtp = '';
   let balance = Number(localStorage.getItem(K_BALANCE)) || 239600;
 
   const thb = n => '฿' + Math.round(n).toLocaleString('th-TH');
@@ -649,45 +624,18 @@
   const phoneInput = document.getElementById('login-phone');
   phoneInput.addEventListener('input', () => {
     phoneInput.value = phoneInput.value.replace(/\D/g,'').slice(0,10);
-    document.getElementById('btn-send-otp').disabled = phoneInput.value.length < 9;
+    document.getElementById('btn-login').disabled = phoneInput.value.length < 9;
   });
-
-  function sendOtp(){
-    currentPhone = phoneInput.value;
-    pendingOtp = String(Math.floor(1000 + Math.random()*9000));
-    document.getElementById('otp-phone-display').textContent = '+66 ' + currentPhone;
-    document.getElementById('otp-hint').textContent =
-      'เดโม: รหัส OTP ทดสอบของคุณคือ ' + pendingOtp + ' (ไม่ได้ส่ง SMS จริง)';
-    document.getElementById('step-phone').classList.remove('active');
-    document.getElementById('step-otp').classList.add('active');
-    document.getElementById('otp-1').focus();
-  }
-
-  // otp auto-advance
-  ['otp-1','otp-2','otp-3','otp-4'].forEach((id, idx, arr) => {
-    const el = document.getElementById(id);
-    el.addEventListener('input', () => {
-      el.value = el.value.replace(/\D/g,'').slice(0,1);
-      if(el.value && idx < arr.length-1) document.getElementById(arr[idx+1]).focus();
-    });
-    el.addEventListener('keydown', (e) => {
-      if(e.key === 'Backspace' && !el.value && idx > 0) document.getElementById(arr[idx-1]).focus();
-    });
-  });
-
-  function backToPhone(){
-    document.getElementById('step-otp').classList.remove('active');
-    document.getElementById('step-phone').classList.add('active');
-  }
-
-  function verifyOtp(){
-    const entered = ['otp-1','otp-2','otp-3','otp-4'].map(id => document.getElementById(id).value).join('');
-    if(entered.length < 4){
-      alert('กรุณากรอกรหัส OTP ให้ครบ 4 หลัก');
-      return;
+  phoneInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && !document.getElementById('btn-login').disabled){
+      loginWithPhone();
     }
-    if(entered !== pendingOtp){
-      alert('รหัส OTP ไม่ถูกต้อง ลองใหม่อีกครั้ง (เดโม รหัสที่ถูกต้องแสดงอยู่ด้านบน)');
+  });
+
+  function loginWithPhone(){
+    currentPhone = phoneInput.value;
+    if(currentPhone.length < 9){
+      alert('กรุณากรอกหมายเลขโทรศัพท์ให้ถูกต้อง');
       return;
     }
 
@@ -709,11 +657,8 @@
     localStorage.removeItem(K_SESSION);
     document.getElementById('app-root').classList.add('hidden');
     document.getElementById('screen-login').classList.remove('hidden');
-    document.getElementById('step-otp').classList.remove('active');
-    document.getElementById('step-phone').classList.add('active');
     phoneInput.value = '';
-    document.getElementById('btn-send-otp').disabled = true;
-    ['otp-1','otp-2','otp-3','otp-4'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('btn-login').disabled = true;
   }
 
   function startApp(session){
