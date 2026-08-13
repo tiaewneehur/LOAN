@@ -373,35 +373,19 @@
 
   <div class="login-card">
 
-    <!-- step 1: phone -->
     <div class="login-step active" id="step-phone">
       <p class="field-label">หมายเลขโทรศัพท์</p>
       <div class="phone-input-wrap">
         <span class="pre">+66</span>
         <input type="tel" id="login-phone" placeholder="8x-xxx-xxxx" maxlength="10" inputmode="numeric">
       </div>
-      <button class="btn-block" id="btn-send-otp" onclick="sendOtp()" disabled>ขอรหัส OTP</button>
-      <p class="login-note">เดโม: ยังไม่ได้เชื่อมต่อระบบส่ง SMS จริง รหัส OTP จะแสดงให้ในขั้นถัดไปเพื่อทดสอบ</p>
-    </div>
-
-    <!-- step 2: otp -->
-    <div class="login-step" id="step-otp">
-      <p class="field-label">กรอกรหัส OTP ที่ส่งไปยัง <span id="otp-phone-display" style="color:var(--text);"></span></p>
-      <div class="otp-input-wrap">
-        <input type="text" id="otp-1" maxlength="1" inputmode="numeric">
-        <input type="text" id="otp-2" maxlength="1" inputmode="numeric">
-        <input type="text" id="otp-3" maxlength="1" inputmode="numeric">
-        <input type="text" id="otp-4" maxlength="1" inputmode="numeric">
-      </div>
-      <div class="otp-hint" id="otp-hint"></div>
 
       <div class="remember-row">
         <input type="checkbox" id="remember-me" checked>
-        <label for="remember-me">จดจำฉันไว้ในเครื่องนี้ (ไม่ต้องกรอก OTP ครั้งถัดไป)</label>
+        <label for="remember-me">จดจำฉันไว้ในเครื่องนี้ (ไม่ต้องกรอกเบอร์ครั้งถัดไป)</label>
       </div>
 
-      <button class="btn-block" id="btn-verify-otp" onclick="verifyOtp()">เข้าสู่ระบบ</button>
-      <button class="link-btn" onclick="backToPhone()">เปลี่ยนหมายเลขโทรศัพท์</button>
+      <button class="btn-block" id="btn-login" onclick="loginWithPhone()" disabled>เข้าสู่ระบบ</button>
     </div>
 
   </div>
